@@ -1,44 +1,66 @@
-# Hayya.qa Local Copy
+# Hayya Avatar
 
-This folder contains a local copy of the hayya.qa website.
+A web application featuring the Visit Qatar AI Assistant avatar integration with proxy support for local development.
 
-## Files
+## Overview
 
-- `download_website.py` - Python script used to download the website
-- `server.js` - Local Node.js server to run the site
-- `downloaded-site/` - The downloaded website files
+This project provides a local development environment for testing the Visit Qatar AI Assistant avatar widget. It includes a Node.js proxy server that handles CORS restrictions when communicating with external APIs and CDN resources.
 
-## How to Run
+## Features
 
-### Option 1: Using the Node.js Server (Recommended)
+- 🤖 Integrated AI Assistant avatar widget
+- 🔄 CORS proxy for API requests to Azure API Management
+- 🖼️ Avatar CDN proxy for serving frontend assets
+- 🎨 Custom styling support for the avatar widget
+
+## Project Structure
+
+```
+├── index.html              # Main landing page with chat launcher
+├── server.js               # Node.js proxy server
+├── avatar-embed.html       # Avatar widget embed page
+├── avatar-custom-styles.css # Custom avatar styling
+├── downloaded-site/        # Downloaded website assets
+└── package.json            # Node.js dependencies
+```
+
+## Prerequisites
+
+- Node.js (v16 or higher)
+- npm
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/francisnazareth/hayya-avatar.git
+   cd hayya-avatar
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+## Running Locally
+
+Start the development server:
 
 ```bash
 node server.js
 ```
 
-Then open http://localhost:3000 in your browser.
+Open http://localhost:3000 in your browser.
 
-### Option 2: Open Directly in Browser
+## How It Works
 
-Simply open `downloaded-site/index.html` in your browser. Note that some features may not work due to CORS restrictions and the site expecting to run from a server.
+The server acts as a proxy to bypass CORS restrictions:
 
-## Notes
+- `/api-proxy/*` → Proxies requests to `apimanagement-prod-qc-vq.azure-api.net`
+- `/avatar-proxy/*` → Proxies requests to the Azure Front Door CDN for avatar assets
 
-- The site was downloaded on December 29, 2025
-- Some dynamic features may not work in the local copy (like forms, API calls, etc.)
-- External resources and CDN assets may still be loaded from the internet
-- This is a static snapshot of the website
+JavaScript files are automatically rewritten to redirect API and CDN calls through the local proxy.
 
-## Re-downloading
+## License
 
-To download the latest version of the site:
-
-```bash
-python download_website.py
-```
-
-Or using the virtual environment:
-
-```bash
-.venv\Scripts\python.exe download_website.py
-```
+ISC
