@@ -83,8 +83,12 @@ function proxyAvatarRequest(targetUrl, request) {
                         '/api/avatar-proxy/'
                     );
                     
-                    // Don't rewrite API URLs here - __API_BASE__ handles the base URL
-                    // The Visit Qatar code uses __API_BASE__ + relative paths
+                    // Replace API URLs with full absolute proxy URL
+                    // Using full URL to match how local server.js works
+                    jsContent = jsContent.replace(
+                        /https:\/\/apimanagement-prod-qc-vq\.azure-api\.net/g,
+                        'https://calm-bay-0838adf0f.1.azurestaticapps.net/api/api-proxy'
+                    );
                     
                     body = Buffer.from(jsContent, 'utf-8');
                 }
