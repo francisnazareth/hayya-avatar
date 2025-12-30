@@ -4,7 +4,7 @@
     "exclude": ["*.css", "*.js", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.svg", "*.ico", "*.woff", "*.woff2"]
   },
   "globalHeaders": {
-    "Content-Security-Policy": "default-src * 'unsafe-inline' 'unsafe-eval'; connect-src *; img-src * data: blob:; media-src *; frame-src *"
+    "Content-Security-Policy": "default-src * blob: data: 'unsafe-inline' 'unsafe-eval'; script-src * blob: 'unsafe-inline' 'unsafe-eval'; worker-src * blob: data:; connect-src *; img-src * data: blob:; media-src * blob:; frame-src *"
   },
   "mimeTypes": {
     ".json": "application/json",

@@ -218,8 +218,9 @@
   // Use Azure Functions proxy via Static Web App linked backend
   window.__APP_BASE__ = "/api/avatar-proxy/";
   
-  // Override API base URL to use proxy
-  window.__API_BASE__ = "/api/api-proxy/";
+  // API URLs are rewritten in JS files, so we don't need a base prefix
+  // Setting to empty to avoid doubling with rewritten URLs
+  window.__API_BASE__ = "";
   
   console.log('[Avatar Init] Base URLs set:', {APP_BASE: window.__APP_BASE__, API_BASE: window.__API_BASE__});
   
