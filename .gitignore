@@ -1,0 +1,4 @@
+node_modules/
+.vscode/
+.venv/
+api/node_modules/

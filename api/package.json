@@ -1,0 +1,16 @@
+{
+  "name": "hayya-avatar-api",
+  "version": "1.0.0",
+  "description": "Azure Functions proxy for Hayya Avatar",
+  "main": "src/functions/*.js",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"No tests configured\""
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.0"
+  },
+  "devDependencies": {
+    "azure-functions-core-tools": "^4.x"
+  }
+}
