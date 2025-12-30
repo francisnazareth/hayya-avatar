@@ -83,11 +83,8 @@ function proxyAvatarRequest(targetUrl, request) {
                         '/api/avatar-proxy/'
                     );
                     
-                    // Replace API URLs with proxy
-                    jsContent = jsContent.replace(
-                        /https:\/\/apimanagement-prod-qc-vq\.azure-api\.net/g,
-                        '/api/api-proxy'
-                    );
+                    // Don't rewrite API URLs here - __API_BASE__ handles the base URL
+                    // The Visit Qatar code uses __API_BASE__ + relative paths
                     
                     body = Buffer.from(jsContent, 'utf-8');
                 }
