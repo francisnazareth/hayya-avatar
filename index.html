@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Hayya!</title>
+    
+    <!-- Bootstrap CSS (used by Visit Qatar) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Hero section text - white on purple background */
+        .hero {
+            text-align: center;
+            padding: 40px;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: none;
+            color: white;
+            font-weight: 700;
+        }
+        
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: white;
+            opacity: 1;
+        }
+        
+        /* Floating Chat Button */
+        .chat-launcher {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: rgb(78, 5, 5);
+            border-radius: 30px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, opacity 0.5s, visibility 0.5s;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .chat-launcher.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .chat-launcher:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+        }
+        
+        .chat-launcher-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .chat-launcher-text {
+            display: flex;
+            flex-direction: column;
+            color: #333333;
+        }
+        
+        .chat-launcher-text strong {
+            font-size: 14px;
+            margin-bottom: 2px;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+        
+        .chat-launcher-text span {
+            font-size: 12px;
+            color: #008B9B;
+            font-weight: 500;
+        }
+        
+        /* Side Panel */
+        .chat-panel {
+            position: fixed;
+            top: 0;
+            right: -500px;
+            width: 500px;
+            height: 100vh;
+            background: #f5f5f5;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+            transition: right 0.3s ease;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-panel.open {
+            right: 0;
+        }
+        
+        .chat-panel-header {
+            background: white;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-panel-header h2 {
+            color: #333;
+            font-size: 20px;
+            margin: 0;
+        }
+        
+        .close-panel {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        
+        .close-panel:hover {
+            background: #f0f0f0;
+        }
+        
+        .chat-panel-content {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .chat-panel-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 9998;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .online-indicator {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 14px;
+            height: 14px;
+            background: #4caf50;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Welcome to Hayya!</h1>
+        <p>This page includes the Visit Qatar AI Assistant with Avatar.</p>
+    </div>
+    
+
+<!-- Visit Qatar AI Assistant Initialization Script -->
+<script type="text/javascript">
+(function() {
+  console.log('[Avatar Init] Starting initialization...');
+  window.w = "2.6.1";
+  // Use Azure Functions proxy via Static Web App linked backend
+  window.__APP_BASE__ = "/api/avatar-proxy/";
+  
+  // Override API base URL to use proxy
+  window.__API_BASE__ = "/api/api-proxy/";
+  
+  console.log('[Avatar Init] Base URLs set:', {APP_BASE: window.__APP_BASE__, API_BASE: window.__API_BASE__});
+  
+  var urlParams = new URLSearchParams(window.location.search);
+  if (localStorage.getItem("noAiAssistant") === "true") {
+    console.log("[Avatar Init] noAiAssistant flag detected (localStorage). Skipping AI Assistant.");
+    return;
+  }
+  
+  if (urlParams.has("noAiAssistant") && urlParams.get("noAiAssistant") === "true") {
+    localStorage.setItem("noAiAssistant", "true");
+    console.log("[Avatar Init] noAiAssistant flag detected (urlParams). Skipping AI Assistant.");
+    return;
+  }
+  
+  var manifestUrl = window.__APP_BASE__ + ".vite/manifest.json?nocache=true&v=" + Date.now();
+  console.log('[Avatar Init] Fetching manifest from:', manifestUrl);
+  
+  fetch(manifestUrl)
+    .then(function(response) {
+      if (!response.ok) throw new Error('Failed to load AI Assistant manifest (status: ' + response.status + ')');
+      return response.json();
+    })
+    .then(function(manifest) {
+      console.log('[Avatar Init] Manifest loaded successfully:', Object.keys(manifest));
+      var indexEntry = manifest['index.html'];
+      console.log('[Avatar Init] Index entry found:', !!indexEntry);
+      
+      if (indexEntry && indexEntry.css && indexEntry.css.length > 0) {
+        var cssFile = indexEntry.css[0];
+        var cssLink = document.createElement('link');
+        cssLink.rel = 'stylesheet';
+        cssLink.href = window.__APP_BASE__ + cssFile + '?nocache=true&v=' + Date.now();
+        document.head.appendChild(cssLink);
+        console.log('[Avatar Init] CSS loaded:', cssFile);
+      }
+      
+      if (indexEntry && indexEntry.file) {
+        var scriptUrl = window.__APP_BASE__ + indexEntry.file + '?nocache=true&v=' + Date.now();
+        console.log('[Avatar Init] Loading script:', indexEntry.file);
+        var script = document.createElement('script');
+        script.type = 'module';
+        script.src = scriptUrl;
+        script.onload = function() {
+          console.log('[Avatar Init] Script loaded successfully - Vue will create its own container');
+        };
+        script.onerror = function(e) {
+          console.error('[Avatar Init] Failed to load script:', e);
+        };
+        document.body.appendChild(script);
+      }
+    })
+    .catch(function(error) {
+      console.error('[Avatar Init] Error:', error);
+    });
+})();
+</script>
+    
+</body>
+</html>
